@@ -1,6 +1,4 @@
-import sys
-import os
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from graph_db import get_employee_relationships
 from rag import search_employees
 from typing import TypedDict, List
 from langgraph.graph import StateGraph, END
@@ -43,10 +41,16 @@ Return ONLY a comma-separated list of names. If no names are mentioned, return "
     else:
         employees = [name.strip() for name in names_text.split(",")]
     
-    employee_context = search_employees(question)
+    rag_context = search_employees(question)
+    
+    graph_context = ""
+    for name in employees:
+        graph_context += get_employee_relationships(name) + "\n"
+    
+    combined_context = f"EMPLOYEE DATA:\n{rag_context}\n\nTEAM RELATIONSHIPS:\n{graph_context}" if graph_context else rag_context
     
     state["employees_referenced"] = employees
-    state["employee_context"] = employee_context
+    state["employee_context"] = combined_context
     
     return state
 
