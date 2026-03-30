@@ -1,0 +1,57 @@
+[
+  {
+    "id": "emp001",
+    "name": "James Wilson",
+    "role": "Software Engineer",
+    "tenure_years": 2,
+    "manager": "Manager",
+    "survey_score": 58,
+    "performance_rating": "Needs Improvement",
+    "feedback": "Consistently misses deadlines. Good technical skills but struggles with time management and communication.",
+    "recent_notes": "Late on 3 of last 4 sprints. Mentioned feeling overwhelmed in last 1-1."
+  },
+  {
+    "id": "emp002",
+    "name": "Sarah Chen",
+    "role": "Product Designer",
+    "tenure_years": 4,
+    "manager": "Manager",
+    "survey_score": 82,
+    "performance_rating": "Exceeds Expectations",
+    "feedback": "Strong performer, great collaborator. Takes initiative and mentors junior team members.",
+    "recent_notes": "Expressed interest in moving into a lead role. Completed design system overhaul ahead of schedule."
+  },
+  {
+    "id": "emp003",
+    "name": "Tom Nguyen",
+    "role": "Data Analyst",
+    "tenure_years": 1,
+    "manager": "Manager",
+    "survey_score": 71,
+    "performance_rating": "Meets Expectations",
+    "feedback": "Solid analytical work but communication with stakeholders needs improvement.",
+    "recent_notes": "New to the team, still onboarding. Shows potential but needs more guidance."
+  },
+  {
+    "id": "emp004",
+    "name": "Priya Sharma",
+    "role": "Backend Engineer",
+    "tenure_years": 3,
+    "manager": "Manager",
+    "survey_score": 76,
+    "performance_rating": "Meets Expectations",
+    "feedback": "Reliable and technically strong. Can be resistant to feedback at times.",
+    "recent_notes": "Had conflict with James over code review process last month. Resolved but tension remains."
+  },
+  {
+    "id": "emp005",
+    "name": "Marcus Johnson",
+    "role": "QA Engineer",
+    "tenure_years": 5,
+    "manager": "Manager",
+    "survey_score": 65,
+    "performance_rating": "Needs Improvement",
+    "feedback": "Experienced but disengaged. Survey scores have dropped significantly over the past year.",
+    "recent_notes": "Mentioned in last 1-1 that he feels his work is undervalued. Flight risk."
+  }
+]

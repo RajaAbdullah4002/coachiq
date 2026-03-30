@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from rag import search_employees
 from typing import TypedDict, List
 from langgraph.graph import StateGraph, END
 from anthropic import Anthropic
@@ -39,8 +43,10 @@ Return ONLY a comma-separated list of names. If no names are mentioned, return "
     else:
         employees = [name.strip() for name in names_text.split(",")]
     
+    employee_context = search_employees(question)
+    
     state["employees_referenced"] = employees
-    state["employee_context"] = f"Manager asked: {question}. Employees mentioned: {names_text}"
+    state["employee_context"] = employee_context
     
     return state
 
