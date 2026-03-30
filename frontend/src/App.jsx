@@ -50,26 +50,26 @@ export default function App() {
   }
 
   return (
-    <div className="flex h-screen bg-[#0D0D12] text-[#E8E6E0] font-sans">
+    <div style={{fontFamily: "'Inter', sans-serif"}} className="flex h-screen bg-[#0D0D12] text-[#E8E6E0]">
 
       {/* Sidebar */}
-      <div className="w-48 bg-[#111118] border-r border-[#1E1E2A] flex flex-col flex-shrink-0">
-        <div className="p-4 border-b border-[#1E1E2A]">
-          <div className="font-bold text-lg text-yellow-400 tracking-tight">CoachIQ</div>
-          <div className="text-[9px] text-[#555568] uppercase tracking-widest font-mono mt-0.5">AI Manager Intelligence</div>
+      <div className="w-64 bg-[#111118] border-r border-[#1E1E2A] flex flex-col flex-shrink-0">
+        <div className="p-5 border-b border-[#1E1E2A]">
+          <div style={{fontFamily: "'Syne', sans-serif"}} className="font-bold text-2xl text-yellow-400 tracking-tight">CoachIQ</div>
+          <div style={{fontFamily: "'DM Mono', monospace"}} className="text-xs text-[#555568] uppercase tracking-widest mt-1">AI Manager Intelligence</div>
         </div>
-        <div className="px-4 pt-3 pb-1 text-[9px] text-[#444458] uppercase tracking-widest font-mono">Your Team</div>
+        <div style={{fontFamily: "'DM Mono', monospace"}} className="px-5 pt-4 pb-2 text-xs text-[#444458] uppercase tracking-widest">Your Team</div>
         {EMPLOYEES.map(emp => (
           <button
             key={emp.id}
             onClick={() => setActiveEmp(emp.id)}
-            className={`flex items-center gap-2 px-4 py-2 w-full text-left hover:bg-[#181825] transition-colors ${activeEmp === emp.id ? "bg-[#1A1A28] border-l-2 border-yellow-400" : ""}`}
+            className={`flex items-center gap-3 px-5 py-3 w-full text-left hover:bg-[#181825] transition-colors ${activeEmp === emp.id ? "bg-[#1A1A28] border-l-2 border-yellow-400" : ""}`}
           >
-            <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[9px] font-semibold flex-shrink-0 ${avatarColors[emp.color]}`}>
+            <div className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-semibold flex-shrink-0 ${avatarColors[emp.color]}`}>
               {emp.initials}
             </div>
-            <span className="text-xs text-[#C8C6C0] truncate">{emp.name.split(" ")[0]}</span>
-            <span className={`text-[10px] font-mono ml-auto ${scoreColor(emp.score)}`}>{emp.score}</span>
+            <span className="text-sm text-[#C8C6C0] truncate">{emp.name}</span>
+            <span style={{fontFamily: "'DM Mono', monospace"}} className={`text-xs ml-auto flex-shrink-0 ${scoreColor(emp.score)}`}>{emp.score}</span>
           </button>
         ))}
       </div>
@@ -78,18 +78,18 @@ export default function App() {
       <div className="flex-1 flex flex-col overflow-hidden">
 
         {/* Topbar */}
-        <div className="px-5 py-3 border-b border-[#1E1E2A] flex items-center justify-between">
-          <div className="text-sm font-semibold">Coaching Session</div>
-          <div className="text-[9px] font-mono bg-green-950 text-green-400 px-2 py-1 rounded-full tracking-widest">PIPELINE ACTIVE</div>
+        <div className="px-6 py-4 border-b border-[#1E1E2A] flex items-center justify-between">
+          <div className="text-base font-semibold">Coaching Session</div>
+          <div style={{fontFamily: "'DM Mono', monospace"}} className="text-xs bg-green-950 text-green-400 px-3 py-1 rounded-full tracking-widest">PIPELINE ACTIVE</div>
         </div>
 
         {/* Chat */}
-        <div className="flex-1 overflow-y-auto p-5 flex flex-col gap-4">
+        <div className="flex-1 overflow-y-auto p-6 flex flex-col gap-5">
           {messages.length === 0 && (
             <div className="flex-1 flex items-center justify-center">
               <div className="text-center">
-                <div className="text-3xl font-bold text-yellow-400 mb-2">CoachIQ</div>
-                <div className="text-sm text-[#555568] font-mono">Ask anything about your team</div>
+                <div style={{fontFamily: "'Syne', sans-serif"}} className="text-4xl font-bold text-yellow-400 mb-3">CoachIQ</div>
+                <div style={{fontFamily: "'DM Mono', monospace"}} className="text-sm text-[#555568]">Ask anything about your team</div>
               </div>
             </div>
           )}
@@ -98,7 +98,7 @@ export default function App() {
             <div key={i}>
               {msg.role === "user" && (
                 <div className="flex justify-end">
-                  <div className="bg-[#1A1A28] border border-[#2A2A3A] rounded-xl rounded-br-sm px-4 py-2.5 max-w-[75%] text-sm text-[#D0CEC8]">
+                  <div className="bg-[#1A1A28] border border-[#2A2A3A] rounded-xl rounded-br-sm px-5 py-3 max-w-[75%] text-sm text-[#D0CEC8]">
                     {msg.text}
                   </div>
                 </div>
@@ -107,33 +107,33 @@ export default function App() {
               {msg.role === "ai" && (
                 <div className="max-w-[85%]">
                   <div className="flex items-center gap-2 mb-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-yellow-400"></div>
-                    <div className="text-[9px] font-mono text-yellow-400 tracking-widest">COACHIQ · 3 AGENTS</div>
+                    <div className="w-2 h-2 rounded-full bg-yellow-400"></div>
+                    <div style={{fontFamily: "'DM Mono', monospace"}} className="text-xs text-yellow-400 tracking-widest">COACHIQ · 3 AGENTS</div>
                   </div>
-                  <div className="bg-[#141420] border border-[#22223A] rounded-sm rounded-tr-xl rounded-b-xl p-4">
-                    <div className="text-xs text-[#555568] font-mono uppercase tracking-widest mb-1">Response</div>
+                  <div className="bg-[#141420] border border-[#22223A] rounded-sm rounded-tr-xl rounded-b-xl p-5">
+                    <div style={{fontFamily: "'DM Mono', monospace"}} className="text-xs text-[#555568] uppercase tracking-widest mb-2">Response</div>
                     <div className="text-sm text-[#C0BEB8] leading-relaxed whitespace-pre-wrap">{msg.data.answer}</div>
 
                     {msg.data.employees_referenced?.length > 0 && (
-                      <div className="mt-3">
-                        <div className="text-[9px] font-mono text-[#555568] uppercase tracking-widest mb-1.5">Employees Referenced</div>
-                        <div className="flex flex-wrap gap-1.5">
+                      <div className="mt-4">
+                        <div style={{fontFamily: "'DM Mono', monospace"}} className="text-xs text-[#555568] uppercase tracking-widest mb-2">Employees Referenced</div>
+                        <div className="flex flex-wrap gap-2">
                           {msg.data.employees_referenced.map((name, j) => (
-                            <span key={j} className="bg-[#1A1E2A] border border-[#2A304A] rounded px-2 py-0.5 text-xs text-blue-400 font-mono">{name}</span>
+                            <span key={j} className="bg-[#1A1E2A] border border-[#2A304A] rounded px-3 py-1 text-xs text-blue-400" style={{fontFamily: "'DM Mono', monospace"}}>{name}</span>
                           ))}
                         </div>
                       </div>
                     )}
 
-                    <div className="flex items-center gap-3 mt-3 pt-3 border-t border-[#1E1E2A]">
-                      <div className="text-[9px] font-mono text-[#444458] uppercase tracking-widest">Bias Score</div>
-                      <div className="flex-1 h-0.5 bg-[#1E1E2A] rounded">
+                    <div className="flex items-center gap-3 mt-4 pt-4 border-t border-[#1E1E2A]">
+                      <div style={{fontFamily: "'DM Mono', monospace"}} className="text-xs text-[#444458] uppercase tracking-widest">Bias Score</div>
+                      <div className="flex-1 h-1 bg-[#1E1E2A] rounded">
                         <div
-                          className={`h-0.5 rounded transition-all ${msg.data.bias_score > 0.5 ? "bg-red-400" : "bg-green-400"}`}
+                          className={`h-1 rounded transition-all ${msg.data.bias_score > 0.5 ? "bg-red-400" : "bg-green-400"}`}
                           style={{ width: `${msg.data.bias_score * 100}%` }}
                         ></div>
                       </div>
-                      <div className={`text-[9px] font-mono ${msg.data.bias_score > 0.5 ? "text-red-400" : "text-green-400"}`}>
+                      <div style={{fontFamily: "'DM Mono', monospace"}} className={`text-xs ${msg.data.bias_score > 0.5 ? "text-red-400" : "text-green-400"}`}>
                         {msg.data.bias_score.toFixed(2)} · {msg.data.bias_flag ? "FLAGGED" : "CLEAN"}
                       </div>
                     </div>
@@ -142,23 +142,23 @@ export default function App() {
               )}
 
               {msg.role === "error" && (
-                <div className="text-xs text-red-400 font-mono">{msg.text}</div>
+                <div style={{fontFamily: "'DM Mono', monospace"}} className="text-sm text-red-400">{msg.text}</div>
               )}
             </div>
           ))}
 
           {loading && (
             <div className="flex items-center gap-2">
-              <div className="w-1.5 h-1.5 rounded-full bg-yellow-400 animate-pulse"></div>
-              <div className="text-[9px] font-mono text-yellow-400 tracking-widest">AGENTS PROCESSING...</div>
+              <div className="w-2 h-2 rounded-full bg-yellow-400 animate-pulse"></div>
+              <div style={{fontFamily: "'DM Mono', monospace"}} className="text-xs text-yellow-400 tracking-widest">AGENTS PROCESSING...</div>
             </div>
           )}
         </div>
 
         {/* Input */}
-        <div className="px-5 py-3 border-t border-[#1E1E2A] flex gap-3 items-center">
+        <div className="px-6 py-4 border-t border-[#1E1E2A] flex gap-3 items-center">
           <input
-            className="flex-1 bg-[#111118] border border-[#22223A] rounded-lg px-4 py-2.5 text-sm text-[#E8E6E0] outline-none focus:border-yellow-400 transition-colors placeholder-[#444458]"
+            className="flex-1 bg-[#111118] border border-[#22223A] rounded-lg px-5 py-3 text-sm text-[#E8E6E0] outline-none focus:border-yellow-400 transition-colors placeholder-[#444458]"
             placeholder="Ask about your team..."
             value={input}
             onChange={e => setInput(e.target.value)}
@@ -167,7 +167,7 @@ export default function App() {
           <button
             onClick={sendMessage}
             disabled={loading}
-            className="bg-yellow-400 hover:bg-yellow-300 disabled:opacity-40 text-[#0D0D12] font-bold text-xs px-4 py-2.5 rounded-lg transition-colors"
+            className="bg-yellow-400 hover:bg-yellow-300 disabled:opacity-40 text-[#0D0D12] font-bold text-sm px-6 py-3 rounded-lg transition-colors"
           >
             Send
           </button>
