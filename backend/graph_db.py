@@ -35,33 +35,39 @@ def seed_team_graph():
         """)
 
 def get_employee_relationships(name: str) -> str:
-    with driver.session() as session:
-        result = session.run("""
-            MATCH (e:Employee {name: $name})-[r]->(other)
-            RETURN type(r) as relationship, other.name as person, other.role as role
-        """, name=name)
-        
-        outgoing = [f"{r['relationship']} → {r['person']} ({r['role']})" for r in result]
-        
-        result2 = session.run("""
-            MATCH (other)-[r]->(e:Employee {name: $name})
-            RETURN type(r) as relationship, other.name as person, other.role as role
-        """, name=name)
-        
-        incoming = [f"{r['person']} ({r['role']}) → {r['relationship']}" for r in result2]
-        
-        if not outgoing and not incoming:
-            return f"No relationships found for {name}"
-        
-        context = f"Relationships for {name}:\n"
-        if outgoing:
-            context += "  " + "\n  ".join(outgoing) + "\n"
-        if incoming:
-            context += "  " + "\n  ".join(incoming)
-        
-        return context
-
+    try:
+        with driver.session() as session:
+            result = session.run("""
+                MATCH (e:Employee {name: $name})-[r]->(other)
+                RETURN type(r) as relationship, other.name as person, other.role as role
+            """, name=name)
+            
+            outgoing = [f"{r['relationship']} → {r['person']} ({r['role']})" for r in result]
+            
+            result2 = session.run("""
+                MATCH (other)-[r]->(e:Employee {name: $name})
+                RETURN type(r) as relationship, other.name as person, other.role as role
+            """, name=name)
+            
+            incoming = [f"{r['person']} ({r['role']}) → {r['relationship']}" for r in result2]
+            
+            if not outgoing and not incoming:
+                return f"No relationships found for {name}"
+            
+            context = f"Relationships for {name}:\n"
+            if outgoing:
+                context += "  " + "\n  ".join(outgoing) + "\n"
+            if incoming:
+                context += "  " + "\n  ".join(incoming)
+            
+            return context
+    except Exception as e:
+        return f"Graph database unavailable for {name}"
 def close():
     driver.close()
 
-seed_team_graph()
+try:
+    seed_team_graph()
+    print("Neo4j connected and seeded successfully")
+except Exception as e:
+    print(f"Neo4j unavailable: {e}. Graph features disabled.")

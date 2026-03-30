@@ -38,7 +38,7 @@ export default function App() {
     setMessages(prev => [...prev, { role: "user", text: question }])
     setLoading(true)
     try {
-      const res = await axios.post("http://localhost:8000/coach", {
+      const res = await axios.post("https://coachiq-backend.azurewebsites.net/coach", {
         question,
         manager_name: "Manager"
       })
@@ -61,7 +61,7 @@ export default function App() {
       formData.append("audio", blob, "recording.wav")
       setLoading(true)
       try {
-        const res = await axios.post("http://localhost:8000/transcribe", formData)
+        const res = await axios.post("https://coachiq-backend.azurewebsites.net/transcribe", formData)
         setInput(res.data.text)
       } catch (e) {
         console.error("Transcription failed", e)
