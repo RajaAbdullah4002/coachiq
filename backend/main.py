@@ -1,3 +1,4 @@
+from database import log_session, get_bias_summary
 from fastapi import FastAPI, HTTPException, UploadFile, File
 from fastapi.responses import Response
 import sys
@@ -33,6 +34,15 @@ def coach(request: CoachRequest):
             "bias_flag": False,
             "employees_referenced": []
         })
+        
+        log_session(
+            manager_name=request.manager_name,
+            question=request.question,
+            response=result["coaching_response"],
+            bias_score=result["bias_score"],
+            bias_flag=result["bias_flag"],
+            employees=result["employees_referenced"]
+        )
         
         return CoachResponse(
             answer=result["coaching_response"],
@@ -71,3 +81,6 @@ async def speak(request: CoachRequest):
         return Response(content=audio_bytes, media_type="audio/mpeg")
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+@app.get("/bias-summary")
+def bias_summary():
+    return get_bias_summary()
