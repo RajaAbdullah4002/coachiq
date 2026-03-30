@@ -28,6 +28,8 @@ export default function App() {
   const [input, setInput] = useState("")
   const [loading, setLoading] = useState(false)
   const [activeEmp, setActiveEmp] = useState("emp001")
+  const [recording, setRecording] = useState(false)
+  const [mediaRecorder, setMediaRecorder] = useState(null)
 
   const sendMessage = async () => {
     if (!input.trim()) return
@@ -35,7 +37,6 @@ export default function App() {
     setInput("")
     setMessages(prev => [...prev, { role: "user", text: question }])
     setLoading(true)
-
     try {
       const res = await axios.post("http://localhost:8000/coach", {
         question,
@@ -47,6 +48,36 @@ export default function App() {
     } finally {
       setLoading(false)
     }
+  }
+
+  const startRecording = async () => {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+    const recorder = new MediaRecorder(stream)
+    const chunks = []
+    recorder.ondataavailable = e => chunks.push(e.data)
+    recorder.onstop = async () => {
+      const blob = new Blob(chunks, { type: "audio/wav" })
+      const formData = new FormData()
+      formData.append("audio", blob, "recording.wav")
+      setLoading(true)
+      try {
+        const res = await axios.post("http://localhost:8000/transcribe", formData)
+        setInput(res.data.text)
+      } catch (e) {
+        console.error("Transcription failed", e)
+      } finally {
+        setLoading(false)
+      }
+      stream.getTracks().forEach(t => t.stop())
+    }
+    recorder.start()
+    setMediaRecorder(recorder)
+    setRecording(true)
+  }
+
+  const stopRecording = () => {
+    mediaRecorder.stop()
+    setRecording(false)
   }
 
   return (
@@ -157,6 +188,12 @@ export default function App() {
 
         {/* Input */}
         <div className="px-6 py-4 border-t border-[#1E1E2A] flex gap-3 items-center">
+          <button
+            onClick={recording ? stopRecording : startRecording}
+            className={`px-4 py-3 rounded-lg text-sm font-bold transition-colors ${recording ? "bg-red-500 text-white animate-pulse" : "bg-[#1A1A28] border border-[#2A2A3A] text-[#C8C6C0] hover:border-yellow-400"}`}
+          >
+            {recording ? "Stop" : "Mic"}
+          </button>
           <input
             className="flex-1 bg-[#111118] border border-[#22223A] rounded-lg px-5 py-3 text-sm text-[#E8E6E0] outline-none focus:border-yellow-400 transition-colors placeholder-[#444458]"
             placeholder="Ask about your team..."
